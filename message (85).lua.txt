@@ -8,7 +8,6 @@ getgenv().RAM = { -- Log Des
     ['Enabled'] = false, 
     ['Delay'] = 600 
 }
-
 getgenv().Setting = { -- Setting Script / ตั้งค่าสคริปต์
     ['FPS Booster'] = _G.Setting['FPS Booster'],
     ['White Screen'] = true,
@@ -17,7 +16,6 @@ getgenv().Setting = { -- Setting Script / ตั้งค่าสคริป�
     ['AFK Check'] = 150,
     ['Rejoin'] = true
 }
-
 getgenv().Quest = { -- Farm Quest / ทำเควส
     ['RGB Haki'] = _G.Quest['RGB Aura Haki'],
     ['Evo Race'] = {
@@ -40,7 +38,12 @@ getgenv().Fruit = { -- Select Fruit / เลือกผลที่ต้อง
     ['Select Fruit'] = _G.Fruit['Select Fruit'], 
     ['Bring Fruit'] = true 
 }
-
+getgenv().Webhook = {-- Webhook Fam
+   ["UrlWebhook"] = "Webhook Here",
+   ["StartWeebhok"] = true,
+}
+_G.UrlWebhook = getgenv().UrlWebhook
+_G.StartWeebhok = getgenv().StartWeebhok
 getgenv().Melee = { -- Farm Melee / ฟามหมัด
     ['Superhuman'] = true,
     ['Death Step'] = true,
@@ -108,6 +111,7 @@ if _G.On_Next_Generation then
         ['Bring Fruit'] = getgenv().Fruit['Bring Fruit'],
         ['Kill Boss'] = getgenv().Quest['Kill Boss']
     }
+    
     _G.Melee = getgenv().Melee
     _G.Sword = getgenv().Sword
     _G.Gun = getgenv().Gun
@@ -239,6 +243,51 @@ if _G.Cat_Hub_Series_R then
 	end)
 	wait(3)
 	Weapon = 'Combat'
+	--Webhook
+	Urlsent = getgenv().Webhook.UrlWebhook
+function wSend(main)
+    spawn(function()
+        local Data = game:GetService("HttpService"):JSONEncode(main)
+        local Head = {["content-type"] = "application/json"}
+        Send = http_request or request or HttpPost or syn.request 
+        if true then 
+            Send({Url = Urlsent, Body = Data, Method = "POST", Headers = Head})
+        end
+    end)
+end 
+function wEarn(targ, earn,total) 
+    if getgenv().Webhook.StartWeebhok 
+        local data = {
+            ["content"] = "",
+            ["embeds"] = {
+                {
+                    ["title"] = "**Cat Hub | Tets Webhook**",
+                    ["color"] = 00000,
+                    ["fields"] = {
+                        {
+                            ["name"] = "Account: ",
+                            ["value"] = "||"..game.Players.LocalPlayer.Name.."||",
+                            ["inline"] = false,
+                        },
+                        {
+                            ["name"] = "Account Total: ",
+                            ["value"] = "```Earned: "..total.."```",
+                            ["inline"] = false,
+                        }
+                    },
+                    ["thumbnail"] = {
+                        ["url"] = "",
+                    },
+                    ["footer"] = {
+                        ["text"] = "Cat Hub - discord.gg/w22cHrv985",
+                    },
+                    ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ"),
+                }
+            }
+        }
+        wSend(data)
+    end
+end
 	-- AFK
 	spawn(function()
 		while wait(150) do

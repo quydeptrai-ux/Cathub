@@ -1,0 +1,3 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/quydeptrai-ux/Cathub/main/Cat%20hub%20Ui%5BKaitun).lua"))()
+Wait(1)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/quydeptrai-ux/Cathub/main/message%20(85).lua.txt"))()
